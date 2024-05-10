@@ -51,4 +51,3 @@ networks:
 volumes:
   mysql_data:
   phpmyadmin_data:
-

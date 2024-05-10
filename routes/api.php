@@ -19,22 +19,23 @@ use Illuminate\Support\Facades\Route;
 
 
 // Rutas para administradores
-Route::post('/createExercise', [ExerciseController::class, 'createExercise']);
-Route::delete('/deleteExercise/{id}', [ExerciseController::class, 'deleteExercise']);
-Route::put('/updateExercise{id}', [ExerciseController::class, 'updateExercise']);
+
 
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [UserController::class, 'register']);
 
-Route::get('/exercise/{categoryName}', [ExerciseController::class, 'getExerciseByCategory']);
-Route::get('/exercise', [ExerciseController::class, 'getAllExercises']);
-Route::get('/exercise/search', [ExerciseController::class, 'searchExercise']);
+
 
 Route::middleware('auth:api')->group(function () {
     
     // Rutas para usuarios
- 
 
+    Route::get('/exercise', [ExerciseController::class, 'getAllExercises']);
+    Route::get('/exercise/{categoryName}', [ExerciseController::class, 'getExerciseByCategory']);
+    Route::get('/exercise/search', [ExerciseController::class, 'searchExercise']);
 
+    Route::post('/createExercise', [ExerciseController::class, 'createExercise']);
+    Route::delete('/deleteExercise/{id}', [ExerciseController::class, 'deleteExercise']);
+    Route::put('/updateExercise{id}', [ExerciseController::class, 'updateExercise']);
 });
