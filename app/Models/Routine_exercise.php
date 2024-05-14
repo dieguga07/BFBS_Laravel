@@ -9,10 +9,12 @@ class Routine_exercise extends Model
 {
     use HasFactory;
     protected $table = 'routine_exercise';
-    
+
     protected $fillable = [
         'exercise_id',
         'routine_id',
+        'serie',
+        'repetition',
     ];
 
     

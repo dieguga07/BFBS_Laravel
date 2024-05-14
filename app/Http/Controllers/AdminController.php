@@ -124,16 +124,12 @@ class AdminController extends Controller
             'name' => 'required|string',
             'image' => 'required|string',
             'description' => 'required|string',
-            'serie' => 'integer',
-            'repetition' => 'integer',
         ]);
 
         Exercise::create([
             'name'=> $request->name,
             'image'=> $request->image,
             'description'=> $request->description,
-            'serie'=> $request->serie,
-            'repetition'=> $request->repetition,
         ]);
 
         return response()->json(['message' => 'Exercise created'], 200);
@@ -184,12 +180,18 @@ class AdminController extends Controller
 
 
     public function getAllExercises(){
+
+        if (!Auth::user()->admin_rol) {
+            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        }
         
         $exercises = Exercise::all();
 
         return response()->json($exercises);
 
     }
+
+   
 
 
 }

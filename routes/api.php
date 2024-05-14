@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,17 +27,24 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [UserController::class, 'register']);
 
-
+Route::post('/create-routine',[RoutineController::class, 'createRoutine']);
 
 Route::middleware('auth:api')->group(function () {
     
-    // Rutas para usuarios
+    // Usuarios
 
+    // U.Exercise
     Route::get('/exercise', [ExerciseController::class, 'getAllExercises']);
+    Route::get('/exercise/{id}', [ExerciseController::class, 'getExercise']);
     Route::get('/exercise/{categoryName}', [ExerciseController::class, 'getExerciseByCategory']);
     Route::get('/exercise/search', [ExerciseController::class, 'searchExercise']);
 
-    Route::post('/createExercise', [ExerciseController::class, 'createExercise']);
-    Route::delete('/deleteExercise/{id}', [ExerciseController::class, 'deleteExercise']);
-    Route::put('/updateExercise{id}', [ExerciseController::class, 'updateExercise']);
+    //Admin
+
+    //A.Exercise
+    Route::post('/createExercise', [AdminController::class, 'createExercise']);
+    Route::delete('/deleteExercise/{id}', [AdminController::class, 'deleteExercise']);
+    Route::put('/updateExercise{id}', [AdminController::class, 'updateExercise']);
+    
+
 });

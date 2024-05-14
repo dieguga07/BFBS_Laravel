@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('routine_id')->references('id')->on('routine')->onDelete('cascade');
             $table->foreignId('exercise_id')->references('id')->on('exercise')->onDelete('cascade');
+            $table->integer('serie')->integer();
+            $table->integer('repetition')->integer();
             $table->timestamps();
         });
     }

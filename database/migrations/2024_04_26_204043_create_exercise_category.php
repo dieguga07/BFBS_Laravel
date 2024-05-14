@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('exercise_category', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('routine_id')->references('id')->on('routine')->onDelete('cascade');
-            $table->foreignId('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreignId('exercise_id')->references('id')->on('exercise')->onDelete('cascade');
+            $table->foreignId('category_id')->references('id')->on('category')->onDelete('cascade');
             $table->timestamps();
         });
     }

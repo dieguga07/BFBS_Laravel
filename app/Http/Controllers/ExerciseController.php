@@ -44,7 +44,17 @@ class ExerciseController extends Controller{
         return response()->json($exercises);
     }
 
-    
+    public function getExercise($id){
+
+        $exercise = Exercise::find($id);
+
+        if($exercise){
+            return response()->json($exercise);
+        }
+
+            return response()->json(['error' => 'El ejercicio no se encontró.'], 404);
+            
+    }
 
 }
 
