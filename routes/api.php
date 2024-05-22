@@ -27,24 +27,31 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [UserController::class, 'register']);
 
-Route::post('/create-routine',[RoutineController::class, 'createRoutine']);
+
+
 
 Route::middleware('auth:api')->group(function () {
     
     // Usuarios
+    Route::get('/validate-user', [AuthController::class, 'validateToken']);
 
-    // U.Exercise
+
+    // Exercise
     Route::get('/exercise', [ExerciseController::class, 'getAllExercises']);
     Route::get('/exercise/{id}', [ExerciseController::class, 'getExercise']);
-    Route::get('/exercise/{categoryName}', [ExerciseController::class, 'getExerciseByCategory']);
-    Route::get('/exercise/search', [ExerciseController::class, 'searchExercise']);
+    Route::get('/exercise-category/{categoryName}', [ExerciseController::class, 'getExerciseByCategory']);
+    Route::get('/exercise-search/search', [ExerciseController::class, 'searchExercise']);
+
+    // Routine
+    Route::post('/create-routine',[RoutineController::class, 'createRoutine']);
+
 
     //Admin
-
-    //A.Exercise
     Route::post('/createExercise', [AdminController::class, 'createExercise']);
     Route::delete('/deleteExercise/{id}', [AdminController::class, 'deleteExercise']);
     Route::put('/updateExercise{id}', [AdminController::class, 'updateExercise']);
+    
+
     
 
 });
