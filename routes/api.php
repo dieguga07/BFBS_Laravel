@@ -27,7 +27,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [UserController::class, 'register']);
 
-
+Route::get('/prueba', [AdminController::class, 'prueba']);
 
 
 Route::middleware('auth:api')->group(function () {

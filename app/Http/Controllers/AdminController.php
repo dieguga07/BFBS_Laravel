@@ -192,7 +192,9 @@ class AdminController extends Controller
     }
 
    
-
+    public function prueba(){
+        return response()->json("hola mundo");
+    }
 
 }
 

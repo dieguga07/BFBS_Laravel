@@ -32,7 +32,12 @@ class RoutineController extends Controller
             ]);
         }
         
-        return response()->json(['message' => 'Rutina creada exitosamente'], 201);
+        return response()->json(
+            [
+            'message' => 'Rutina creada exitosamente',
+            'routine' => $routine->id
+            ]
+            ,201);
     }
 }
 
