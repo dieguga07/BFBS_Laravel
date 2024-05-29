@@ -101,9 +101,10 @@ class AdminController extends Controller
     }
  
     public function getAllUsers(){
-        if (!Auth::user()->admin_rol) {
-            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
-        }
+
+        // if (!Auth::user()->admin_rol) {
+        //     return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        // }
 
         $user = User::all();
 
@@ -181,9 +182,9 @@ class AdminController extends Controller
 
     public function getAllExercises(){
 
-        if (!Auth::user()->admin_rol) {
-            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
-        }
+        // if (!Auth::user()->admin_rol) {
+        //     return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        // }
         
         $exercises = Exercise::all();
 
@@ -191,11 +192,9 @@ class AdminController extends Controller
 
     }
 
+    
    
-    public function prueba(){
-        return response()->json("hola mundo");
-    }
-
+ 
 }
 
 

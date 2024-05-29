@@ -35,7 +35,6 @@ Route::middleware('auth:api')->group(function () {
     // Usuarios
     Route::get('/validate-user', [AuthController::class, 'validateToken']);
 
-
     // Exercise
     Route::get('/exercise', [ExerciseController::class, 'getAllExercises']);
     Route::get('/exercise/{id}', [ExerciseController::class, 'getExercise']);
@@ -44,14 +43,13 @@ Route::middleware('auth:api')->group(function () {
 
     // Routine
     Route::post('/create-routine',[RoutineController::class, 'createRoutine']);
-
+    Route::post('/create-user-routine/{id}/{user_id}',[RoutineController::class, 'userRoutine']);
+    Route::get('/get-user-routines/{id}',[RoutineController::class, 'getUserRoutines']);
 
     //Admin
     Route::post('/createExercise', [AdminController::class, 'createExercise']);
     Route::delete('/deleteExercise/{id}', [AdminController::class, 'deleteExercise']);
     Route::put('/updateExercise{id}', [AdminController::class, 'updateExercise']);
-    
-
-    
-
+    Route::get('/get-all-users', [AdminController::class, 'getAllUsers']);
+    Route::get('/get-all-exercises', [AdminController::class, 'getAllExercises']);
 });
