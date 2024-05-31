@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AdminController extends Controller
-{
+class AdminController extends Controller{
+
     public function createUser(Request $request){
 
-        if (!Auth::user()->admin_rol) {
+        if (!Auth::user()->admin) {
             return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
         }
     
@@ -26,7 +26,7 @@ class AdminController extends Controller
 
         $hashedPassword = Hash::make($request->input('password'));
 
-       $user = User::create([
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => $hashedPassword,
@@ -47,7 +47,7 @@ class AdminController extends Controller
 
     public function deleteUser($id){
 
-        if (!Auth::user()->admin_rol) {
+        if (!Auth::user()->admin) {
             return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
         }
 
@@ -68,7 +68,7 @@ class AdminController extends Controller
     }
 
     public function updateUser(Request $request){
-        if (!Auth::user()->admin_rol) {
+        if (!Auth::user()->admin) {
             return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
         }
 
@@ -102,9 +102,9 @@ class AdminController extends Controller
  
     public function getAllUsers(){
 
-        // if (!Auth::user()->admin_rol) {
-        //     return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
-        // }
+        if (!Auth::user()->admin) {
+            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        }
 
         $user = User::all();
 
@@ -117,13 +117,13 @@ class AdminController extends Controller
 
     public function createExercise(Request $request){
 
-        if (!Auth::user()->admin_rol) {
+        if (!Auth::user()->admin) {
             return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
         }
 
         $request->validate([
             'name' => 'required|string',
-            'image' => 'required|string',
+            'image' => 'nullable|string',
             'description' => 'required|string',
         ]);
 
@@ -139,7 +139,7 @@ class AdminController extends Controller
 
     public function deleteExercise($id){
         
-        if (!Auth::user()->admin_rol) {
+        if (!Auth::user()->admin) {
             return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
         }
 
@@ -156,7 +156,7 @@ class AdminController extends Controller
 
     public function updateExercise(Request $request, $id){
 
-        if (!Auth::user()->admin_rol) {
+        if (!Auth::user()->admin) {
             return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
         }
 
@@ -164,8 +164,6 @@ class AdminController extends Controller
             'name' => 'required|string',
             'image' => 'required|string',
             'description' => 'required|string',
-            'serie' => 'integer',
-            'repetition' => 'integer',
         ]);
 
         $exercise = Exercise::find($id);
@@ -182,9 +180,9 @@ class AdminController extends Controller
 
     public function getAllExercises(){
 
-        // if (!Auth::user()->admin_rol) {
-        //     return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
-        // }
+        if (!Auth::user()->admin) {
+            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        }
         
         $exercises = Exercise::all();
 

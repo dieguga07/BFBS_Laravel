@@ -110,7 +110,18 @@ class RoutineController extends Controller
         return response()->json($result);
     }
 
+    public function deleteRoutine($id){
+        
+        $routine = Routine::find($id);
 
+        if($routine){
+            $routine->delete();
+
+            response()->json(['error' => 'Rutina borrada perfectamente'], 200);
+        }
+
+            response()->json(['error' => 'Unauthorized'], 401);
+    }
 
 
 }
