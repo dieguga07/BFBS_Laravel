@@ -36,4 +36,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function deleteUser($id){
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['msg' => 'Usuario no encontado'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['msg' => 'Usuario eliminado']);
+    }
+
 }
