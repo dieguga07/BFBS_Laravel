@@ -48,12 +48,12 @@ Route::middleware('auth:api')->group(function () {
     //Admin
     Route::post('/create-exercise', [AdminController::class, 'createExercise']);
     Route::delete('/deleteExercise/{id}', [AdminController::class, 'deleteExercise']);
-    Route::put('/updateExercise/{id}', [AdminController::class, 'updateExercise']);
+    Route::put('/updateExercise/{id}', [AdminController::class, 'editExercise']);
     Route::get('/get-all-exercises', [AdminController::class, 'getAllExercises']);
 
     Route::post('/create-user', [AdminController::class, 'createUser']);
     Route::delete('/deleteUser/{id}', [AdminController::class, 'deleteUser']);
-    Route::put('//updateUser/{id}', [AdminController::class, 'updateUser']);
+    Route::put('/edit-user/{id}', [AdminController::class, 'editUser']);
     Route::get('/get-all-users', [AdminController::class, 'getAllUsers']);
     
 });

@@ -19,7 +19,7 @@ class AdminController extends Controller{
     
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|email|unique:user,email',
+            'email' => 'required|email|unique:user,email',
             'password' => 'required|string',
             'admin' => 'boolean|required'
         ]);
@@ -35,7 +35,7 @@ class AdminController extends Controller{
         ]);
 
         if( !$user ){
-            return response()->json(['msg' => 'Error , User not created']);
+            return response()->json(['msg' => 'Error , User not created'],422);
         }
         
         return response()->json([
@@ -66,39 +66,6 @@ class AdminController extends Controller{
 
 
     }
-
-    public function updateUser(Request $request){
-        if (!Auth::user()->admin) {
-            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
-        }
-
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:user,email,'.$request->id,
-            'password' => 'required|string',
-            'admin' => 'required|boolean'
-        ]);
-
-       $user = User::find($request->id);
-        if($user){
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'admin' => $request->admin,
-            ]);
-
-            return response()->json([
-                'msg' => 'User updated.',
-                'recipe' => $user
-            ]);
-        } else {
-            return response()->json([
-                'msg' => 'User not found.'
-            ], 404);
-        }
-    
-    }
  
     public function getAllUsers(){
 
@@ -109,6 +76,36 @@ class AdminController extends Controller{
         $user = User::all();
 
         return response()->json($user);
+    }
+
+    public function editUser(Request $request, $id){
+
+        if (!Auth::user()->admin) {
+            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        }
+    
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado.'], 404);
+        }
+    
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:user,email,' . $user->id,
+            'password' => 'nullable|string'
+        ]);
+    
+        // Si se proporciona una nueva contraseña, encriptarla antes de guardarla
+        if (!empty($validatedData['password'])) {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        } else {
+            unset($validatedData['password']);
+        }
+    
+        $user->update($validatedData);
+    
+        return response()->json(['message' => 'Usuario actualizado con éxito.', 'user' => $user], 200);
     }
 
 // ---------------------------------------------------------------------------------------------
@@ -154,30 +151,6 @@ class AdminController extends Controller{
         return response()->json(['message' => 'El ejercicio fue eliminado exitosamente'],200);
     }
 
-    public function updateExercise(Request $request, $id){
-
-        if (!Auth::user()->admin) {
-            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
-        }
-
-        $request->validate([
-            'name' => 'required|string',
-            'image' => 'required|string',
-            'description' => 'required|string',
-        ]);
-
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['error' => 'El ejercicio no fue encontrado'], 404);
-        }
-
-        $exercise->update($request->all());
-
-        return response()->json(['message' => 'El ejercicio fue actualizado exitosamente', 'exercise' => $exercise], 200);
-    }
-
-
     public function getAllExercises(){
 
         if (!Auth::user()->admin) {
@@ -190,8 +163,27 @@ class AdminController extends Controller{
 
     }
 
+    public function editExercise(Request $request, $id){
+        if (!Auth::user()->admin) {
+            return response()->json(['error' => 'No tienes permisos para realizar esta acción.'], 403);
+        }
     
-   
+        $exercise = Exercise::find($id);
+    
+        if (!$exercise) {
+            return response()->json(['error' => 'Ejercicio no encontrado.'], 404);
+        }
+    
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'image' => 'nullable|string',
+            'description' => 'required|string',
+        ]);
+    
+        $exercise->update($validatedData);
+    
+        return response()->json(['msg' => 'Ejercicio actualizado con éxito.', 'exercise' => $exercise], 200);
+    }
  
 }
 
