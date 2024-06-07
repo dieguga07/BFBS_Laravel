@@ -40,6 +40,9 @@ services:
           memory: 1G
 
   laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: php:8.2-apache
     ports:
       - "8000:8000"
