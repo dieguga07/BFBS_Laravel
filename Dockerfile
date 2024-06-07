@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y unzip \
 # Configurar permisos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Ejecutar las migraciones de Laravel durante la construcción de la imagen
+RUN php artisan migrate --force
+
 # Exponer el puerto 80
 EXPOSE 8000
 
