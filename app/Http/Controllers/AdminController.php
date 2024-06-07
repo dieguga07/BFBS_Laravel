@@ -96,7 +96,6 @@ class AdminController extends Controller{
             'password' => 'nullable|string'
         ]);
     
-        // Si se proporciona una nueva contraseña, encriptarla antes de guardarla
         if (!empty($validatedData['password'])) {
             $validatedData['password'] = bcrypt($validatedData['password']);
         } else {

@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function () {
     
     // Usuarios
     Route::get('/validate-user', [AuthController::class, 'validateToken']);
-    Route::delete('/delete-account/{id}',[UserController::class, 'deleteUser']);
+    Route::delete('/delete-account/{id}',[AuthController::class, 'deleteAccount']);
 
     // Exercise
     Route::get('/exercise', [ExerciseController::class, 'getAllExercises']);

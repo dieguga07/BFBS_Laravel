@@ -27,25 +27,15 @@ class UserController extends Controller
         ]);
 
         if( !$user ){
-            return response()->json(['msg' => 'Error , User not created']);
+            return response()->json(['msg' => 'Error , User not created'],500);
         }
         
         return response()->json([
             'msg' => 'User created',
             'User' => $user,
-        ]);
+        ],200);
     }
 
-    public function deleteUser($id){
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['msg' => 'Usuario no encontado'], 404);
-        }
-
-        $user->delete();
-
-        return response()->json(['msg' => 'Usuario eliminado']);
-    }
+ 
 
 }
