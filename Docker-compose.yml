@@ -40,19 +40,14 @@ services:
           memory: 1G
 
   laravel:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: php:8.2-apache
     ports:
-      - "8000:8000"
+      - "8000:8000" 
     volumes:
       - .:/var/www/html
     depends_on:
       - mysql
     command: /bin/bash -c "docker-php-ext-install pdo_mysql && php artisan serve --host=0.0.0.0 --port=8000"
-    links:
-      - mysql
     networks:    
       - laravel-network
     deploy:

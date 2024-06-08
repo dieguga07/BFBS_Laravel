@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // Rutas para administradores
 
+Route::get('/prueba', [AuthController::class, 'prueba']);
 
 Route::post('/login', [AuthController::class, 'login']);
 

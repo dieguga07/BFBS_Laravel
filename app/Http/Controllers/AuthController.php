@@ -44,5 +44,9 @@ class AuthController extends Controller
     }
 
 
+    public function prueba(){
+        return response()->json(['message' => 'Hola'], 200);
+    }
+
 }
 
