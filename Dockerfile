@@ -17,7 +17,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Instalar dependencias
-RUN composer install && npm install --production
+RUN composer install
 
 # Optimizar Laravel
 RUN php artisan optimize && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force
